@@ -1,0 +1,207 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ChatBot </title>
+    <!-- <link type="text/css" rel="stylesheet" href="styles.css" /> -->
+</head>
+<body>
+
+<div style="width: 100wh; display: flex; justify-content: space-around;">
+  <div style=" width: 85%; height: 70vh; box-shadow: 5px 5px 20px #000; border-radius: 20px;">
+    <div style="text-align: center;width: 100%; height: 55px; background: rgb(174, 107, 187); border-top-left-radius: 20px; border-top-right-radius: 20px;">
+      <h1 style=" margin: 0; font-size: 30px; color: rgb(61, 51, 207); text-align: center; padding-top: 10px; font-family: sans-serif;">Bonjour</h1>
+    </div>
+    <div style="width: 100%; height: 100%; background: rgb(0, 140, 255); overflow: auto;">
+      <div id=chatBulles class="padding: 2%; margin: 2%; overflow: auto;">
+        <div style="padding:0.5% ;padding-left: 2%; margin: 5%; margin-right: 40%; background-color: rgb(97, 45, 148); border-radius: 15px;"><p style="font-size:20px;">Hello je suis un robot qui respecte tes droits,<br> tu veux de l'aide ?</p></div>
+      </div>
+      <div id="scroll"></div>
+    </div>
+    <div class="input" style=" height: 25%; width: 100%; overflow: auto;">
+        <input style=" border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; width: 100%; height: 100%; outline: none; border: none; padding-left: 30px; padding-top: 0; font-family: monospace; font-size: 30px; background: rgb(31, 8, 136);"type="text" id="userBox"onkeydown="if(event.keyCode == 13){ talk() }"placeholder="Appuie sur entrée pour envoyer un message">
+      </div>
+  </div>
+</div>
+<script>
+  // normalise le texte entré
+  function normalize(input) {
+      let text = input.toLowerCase().replace(/[\s]{2,}/g," ").replace(/^[\s]/, "").replace(/[\s]$/,"");
+    text = text
+      .replace(/s'il te plait /g, "")
+      .replace(/ stp/g, "");
+      return text
+}
+// function Username() {
+// 	var username = window.prompt("Enter your username:", "");
+	
+// 	if (username.toString().length > 2) {
+// 		localStorage.setItem("username", username);
+// 	}
+// 	else {
+// 		alert("Your username must be at least two characters.");
+// 		Username();
+// 	}
+// }
+
+function botMessage(message) {
+	var chat_messages = document.getElementById("chatBulles");
+  var chatDiv = '<div style="padding: 0.5%; padding-left: 2%; margin: 5%; margin-right: 40%; background-color: rebeccapurple; border-radius: 15px;"><p style="font-size:20px;">'+ message +'</div>'
+	chat_messages.insertAdjacentHTML("beforeend", chatDiv);
+  document.getElementById( 'scroll' ).scrollIntoView();
+}
+
+function userMessage(message) {
+	var chat_messages = document.getElementById("chatBulles");
+  var chatDiv = '<div style="padding: 0.5%; margin: 5%; padding-left: 2%; margin-left: 40%; background-color: rgb(18, 15, 231); border-radius: 15px;"><p style="font-size:20px;">'+ message +'</div>'
+	chat_messages.insertAdjacentHTML("beforeend", chatDiv);
+  // document.getElementById( 'scroll' ).scrollIntoView();
+}
+var rep = 0
+function talk(){
+  var temp = document.getElementById('userBox').value;
+  var user = normalize(temp)
+  userMessage(user)
+  switch (rep){
+    case -1:
+      botMessage("Aurevoir, je reste disponible pour t'aider ainsi que les information sur notre site :)")
+      break;
+    case 0:
+      rep=question1(user)
+      break;
+    case 1:
+      username,rep=question2(user)
+      if (username.length<2){
+        botMessage("ton prénom doit faire plus de deux caractères")
+        username,rep=question2(user)
+      }
+      break;
+    case 2:
+      question3(username,user)
+      break;
+  }
+
+}
+function question1(input){
+
+  var hello = [ "hi" , "hello", "salut", "bonjour", "yo" ,"hey","oui","s'il te plait", "stp" ,"ouais", "aide"]
+
+  const non = [ "non", "comment"]
+
+  if(hello.includes(input)){
+    botMessage("pour t'aider j'aurai donc besoin de quelques informations sur toi..<br>Tu peux toujours répondre par non a chaque question pour ne pas répondre")
+    botMessage("Quel est ton prénom ? (écris que ton prénom)")
+    rep=1
+
+  }else if (non.includes(input)) {
+    botMessage("je suis un bot qui ne sauvegarde pas tes données et qui peut t'informer a propos du maltraitement")
+    rep=-1
+
+  }else{
+    botMessage("Je n'ai pas compris ta demande")
+    rep=0
+  }
+  document.getElementById("userBox").value = "";
+  return rep
+}
+
+function question2(input){
+  const non = [ "non", "je veux pas"]
+  if(non.includes(input)){
+    botMessage("pas de souci toi :)")
+    return "toi",2
+  }else{
+    return input,2
+  }
+}
+
+function question3(username,user){
+  botMessage("Bonjour "+username)
+}
+
+
+    function talkex(){
+///////////////////////Text in left side of consts have to be lowercase
+      var know ={
+          "hi" : "Hello",
+          "how are you ?" : "Great !",
+          "bye" : "Have A Nice Day !",
+          "hello" : "Hi , Whats Up",
+          "fak you" : "fak u too",
+      };
+      const trigger = [
+        //0 
+        ["hi", "hey", "hello"],
+        //1
+        ["how are you", "how are things"],
+        //2
+        ["what is going on", "what is up"],
+        //3
+        ["happy", "good", "well", "fantastic", "cool"],
+        //4
+        ["bad", "bored", "tired", "sad"],
+        //5
+        ["tell me story", "tell me joke"],
+        //6
+        ["thanks", "thank you"],
+        //7
+        ["bye", "good bye", "goodbye"]
+        ];
+
+      const reply = [
+        //0 
+        ["Hello!", "Hi!", "Hey!", "Hi there!"], 
+        //1
+        [
+            "Fine... how are you?",
+            "Pretty well, how are you?",
+            "Fantastic, how are you?"
+          ],
+        //2
+        [
+            "Nothing much",
+            "Exciting things!"
+          ],
+        //3
+        ["Glad to hear it"],
+        //4
+        ["Why?", "Cheer up buddy"],
+        //5
+        ["What about?", "Once upon a time..."],
+        //6
+        ["You're welcome", "No problem"],
+        //7
+        ["Goodbye", "See you later"],
+        ];
+
+      const alternative = [
+          "Same",
+          "Go on...",
+          "Try again",
+          "I'm listening...",
+          "Bro..."
+        ];
+      
+      const robot = ["Suis-je ? Ne suis-je pas ? je crois que je suis", "Je suis un gentil robot", "héhé elon musk n'a qu'a bien se tenir"];
+
+      var temp = document.getElementById('userBox').value;
+      var user = normalize(temp)
+      userMessage(user)
+      if(user in know){
+        botMessage(know[user])
+      }else if (user.match(/robot/gi) || user.match(/bot/gi)) {
+        botMessage(robot[Math.floor(Math.random() * robot.length)] + "<br>")
+      }else{
+        botMessage("I do not understand")
+      }
+  }
+
+  
+      </script>
+
+      <!--  -->
+
+
+</body>
+</html>
