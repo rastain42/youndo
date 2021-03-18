@@ -8,29 +8,32 @@
 </head>
 <body>
 
-<div style="width: 100wh; display: flex; justify-content: space-around;">
-  <div style=" width: 85%; height: 70vh; box-shadow: 5px 5px 20px #000; border-radius: 20px;">
-    <div style="text-align: center;width: 100%; height: 55px; background: rgb(174, 107, 187); border-top-left-radius: 20px; border-top-right-radius: 20px;">
-      <h1 style=" margin: 0; font-size: 30px; color: rgb(61, 51, 207); text-align: center; padding-top: 10px; font-family: sans-serif;">Bonjour</h1>
-    </div>
-    <div style="width: 100%; height: 100%; background: rgb(0, 140, 255); overflow: auto;">
-      <div id=chatBulles class="padding: 2%; margin: 2%; overflow: auto;">
-        <div style="padding:0.5% ;padding-left: 2%; margin: 5%; margin-right: 40%; background-color: rgb(97, 45, 148); border-radius: 15px;"><p style="font-size:20px;">Hello je suis un robot qui respecte tes droits,<br> tu veux de l'aide ?</p></div>
-
-        <!-- <div style="padding: 0.5%; margin: 2.5%; margin-top: 0%; border-radius: 15px; width:80% ; display:flex ;flex-direction: row; ">
-          <div style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 15% ;text-align:center;;"><p style="font-size:20px;">option</p></div>
-          <div style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 15%;"><p style="font-size:20px;">option</p></div>
-          <div style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 15%;"><p style="font-size:20px;">option</p></div>
-        </div> -->
-
+<div id="wrapper">
+  <div id="wrapped" style="width: 100wh; display: flex; justify-content: space-around;">
+    <div style=" width: 85%; height: 70vh; box-shadow: 5px 5px 20px #000; border-radius: 20px;">
+      <div style="text-align: center;width: 100%; height: 55px; background: rgb(174, 107, 187); border-top-left-radius: 20px; border-top-right-radius: 20px;">
+        <h1 style=" margin: 0; font-size: 30px; color: rgb(61, 51, 207); text-align: center; padding-top: 10px; font-family: sans-serif;">Bonjour</h1>
       </div>
-      <div id="scroll"></div>
-    </div>
-    <div class="input" style=" height: 25%; width: 100%; overflow: auto;">
-        <input style=" border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; width: 100%; height: 100%; outline: none; border: none; padding-left: 30px; padding-top: 0; font-family: monospace; font-size: 30px; background: rgb(31, 8, 136);"type="text" id="userBox"onkeydown="if(event.keyCode == 13){ talk() }"placeholder="Appuie sur entrée pour envoyer un message">
+      <div style="width: 100%; height: 100%; background: rgb(0, 140, 255); overflow: auto;">
+        <div id=chatBulles class="padding: 2%; margin: 2%; overflow: auto;">
+          <div style="padding:0.5% ;padding-left: 2%; margin: 5%; margin-right: 40%; background-color: rgb(97, 45, 148); border-radius: 15px;"><p style="font-size:20px;">Hello je suis un robot qui respecte tes droits,<br> tu veux de l'aide ?</p></div>
+
+          <!-- <div style="padding: 0.5%; margin: 2.5%; margin-top: 0%; border-radius: 15px; width:80% ; display:flex ;flex-direction: row; ">
+            <div style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 15% ;text-align:center;;"><p style="font-size:20px;">option</p></div>
+            <div style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 15%;"><p style="font-size:20px;">option</p></div>
+            <div style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 15%;"><p style="font-size:20px;">option</p></div>
+          </div> -->
+
+        </div>
+        <div id="scroll"></div>
       </div>
+      <div class="input" style=" height: 25%; width: 100%; overflow: auto;">
+          <input style=" border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; width: 100%; height: 100%; outline: none; border: none; padding-left: 30px; padding-top: 0; font-family: monospace; font-size: 30px; background: rgb(31, 8, 136);"type="text" id="userBox"onkeydown="if(event.keyCode == 13){ talk() }"placeholder="Appuie sur entrée pour envoyer un message">
+        </div>
+    </div>
   </div>
 </div>
+
 <script>
 
   function normalize(input) {
@@ -55,11 +58,16 @@ function userMessage(message) {
 	chat_messages.insertAdjacentHTML("beforeend", chatDiv);
   document.getElementById( 'scroll' ).scrollIntoView();
 }
-function addButton(option) {
-	var buttonDiv = document.getElementById("buttonDiv");
-  var button = '<div style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 10% ;text-align:center;" onclick="displayRes('+ option +')""><p style="font-size:25px; font-weight:bold">'+option+'</p></div>'
+function addButton(option,buttonDivID) {
+  var id="B"+option
+	var buttonDiv = document.getElementById(buttonDivID);
+  var button = '<div id="'+id+'" style="hover:opacity:0.5; padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 15% ;text-align:center;"><p style="font-size:25px; font-weight:bold">'+option+'</p></div>'
 	buttonDiv.insertAdjacentHTML("beforeend", button);
   document.getElementById( 'scroll' ).scrollIntoView();
+  
+  document.getElementById(id).onclick = function() {
+    document.getElementById("userBox").value = option;
+  }
 }
 
 var rep = 0
@@ -68,6 +76,7 @@ var violences
 var frequence
 var loc
 var username
+var passed = false
 
 function talk(){
   var temp = document.getElementById('userBox').value;
@@ -94,7 +103,14 @@ function talk(){
       rep=question4(user)
       break;
     case 3:
-      rep=question5(user)
+      rep=question5(user,passed)
+      break;
+    case 4:
+      question6(user)
+      break;
+    case 5:
+      rep = question52(user)
+      passed=true
       break;
   }
   document.getElementById("userBox").value = "";
@@ -144,33 +160,60 @@ function question4(input){
     botMessage("cet age n'est pas valide, écris seulement en chiffres")
     return 2
   }
-  botMessage("De quel genre de violence est-tu victime ?")
+  botMessage("De quel genre de violence est-tu victime ?<br> (clique sur une option)")
   var chat_messages = document.getElementById("chatBulles");
   var buttonDiv = '<div id="buttonDiv"style="padding: 0.5%; margin: 2.5%; margin-top: 0%; border-radius: 15px; width:80% ; display:flex ;flex-direction: row; "></div>'
 	chat_messages.insertAdjacentHTML("beforeend", buttonDiv);
-  addButton("morales")
-  addButton("physiques")
-  addButton("sexuelles")
-  addButton("autres")
+  addButton("morales","buttonDiv")
+  addButton("physiques","buttonDiv")
+  addButton("sexuelles","buttonDiv")
+  addButton("autres","buttonDiv")
   return 3
 }
 
-function displayRes(option){
-  document.getElementById("userBox").value = option;
+function question5(input,passed){
+  if(input == "morales" || input == "physiques" || input == "sexuelles" || input == "non"|| passed) {
+    if (!passed){
+      violences = input
+    }
+    botMessage("d'accord, peut tu m'en dire plus sur la fréquence a laquelle cela s'est passé ?<br>(clique une option)")
+    var chat_messages = document.getElementById("chatBulles");
+    var buttonDiv2 = '<div id="buttonDiv2" style="padding: 0.5%; margin: 2.5%; margin-top: 0%; border-radius: 15px; width:80% ; display:flex ;flex-direction: row; "></div>'
+	  chat_messages.insertAdjacentHTML("beforeend", buttonDiv2);
+    addButton("tous les jours","buttonDiv2")
+    addButton("régulièrement","buttonDiv2")
+    addButton("rarement","buttonDiv2")
+    return 4
+
+  }if(input == "autres"){
+    botMessage("dis-m'en plus en quelques mots")
+    return 5
+  }else{
+    botMessage("je n'ai pas compris, clique sur un des bouttons")
+    return 2
+  }
 }
 
+function question52(input){//faire des listes d'autres violences qu'on peut reperer
+botMessage("question getting done")
+return 3
+}
 
-function question5(input){
-  botMessage("5")
-  
-  if(input == "morales") {
-
-  }if(input == "physiques"){
-
-  }if(input == "sexuelles") {
+function question6(input){
+  if(input == "tous les jours" || input == "régulièrement" || input == "rarement" || input == "a des occasions"){
+    frequence=input
+    botMessage("D'accord je vais afficher des articles de loi et des témoignages qui pourraient t'aider")
+    setTimeout(suiteTraitement, 5000)
+    function suiteTraitement(){
+      var wrap= getElementById("wrapper")
+      var wrapped=getElementById("wrapped")
+      wrap.removeChild(wrapped) 
+    }
     
+  }else{
+    botMessage("je n'ai pas compris, clique sur un des bouttons")
+    return 3
   }
-
 }
 
 
