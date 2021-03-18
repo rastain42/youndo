@@ -16,6 +16,13 @@
     <div style="width: 100%; height: 100%; background: rgb(0, 140, 255); overflow: auto;">
       <div id=chatBulles class="padding: 2%; margin: 2%; overflow: auto;">
         <div style="padding:0.5% ;padding-left: 2%; margin: 5%; margin-right: 40%; background-color: rgb(97, 45, 148); border-radius: 15px;"><p style="font-size:20px;">Hello je suis un robot qui respecte tes droits,<br> tu veux de l'aide ?</p></div>
+
+        <!-- <div style="padding: 0.5%; margin: 2.5%; margin-top: 0%; border-radius: 15px; width:80% ; display:flex ;flex-direction: row; ">
+          <div style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 15% ;text-align:center;;"><p style="font-size:20px;">option</p></div>
+          <div style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 15%;"><p style="font-size:20px;">option</p></div>
+          <div style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 15%;"><p style="font-size:20px;">option</p></div>
+        </div> -->
+
       </div>
       <div id="scroll"></div>
     </div>
@@ -25,7 +32,7 @@
   </div>
 </div>
 <script>
-  // normalise le texte entré
+
   function normalize(input) {
       let text = input.toLowerCase().replace(/[\s]{2,}/g," ").replace(/^[\s]/, "").replace(/[\s]$/,"");
     text = text
@@ -33,21 +40,11 @@
       .replace(/ stp/g, "");
       return text
 }
-// function Username() {
-// 	var username = window.prompt("Enter your username:", "");
-	
-// 	if (username.toString().length > 2) {
-// 		localStorage.setItem("username", username);
-// 	}
-// 	else {
-// 		alert("Your username must be at least two characters.");
-// 		Username();
-// 	}
-// }
+
 
 function botMessage(message) {
 	var chat_messages = document.getElementById("chatBulles");
-  var chatDiv = '<div style="padding: 0.5%; padding-left: 2%; margin: 5%; margin-right: 40%; background-color: rebeccapurple; border-radius: 15px;"><p style="font-size:20px;">'+ message +'</div>'
+  var chatDiv = '<div style="padding: 0.5%; padding-left: 2%; margin: 3%; margin-right: 40%; background-color: rebeccapurple; border-radius: 15px;"><p style="font-size:20px;">'+ message +'</div>'
 	chat_messages.insertAdjacentHTML("beforeend", chatDiv);
   document.getElementById( 'scroll' ).scrollIntoView();
 }
@@ -56,68 +53,124 @@ function userMessage(message) {
 	var chat_messages = document.getElementById("chatBulles");
   var chatDiv = '<div style="padding: 0.5%; margin: 5%; padding-left: 2%; margin-left: 40%; background-color: rgb(18, 15, 231); border-radius: 15px;"><p style="font-size:20px;">'+ message +'</div>'
 	chat_messages.insertAdjacentHTML("beforeend", chatDiv);
-  // document.getElementById( 'scroll' ).scrollIntoView();
+  document.getElementById( 'scroll' ).scrollIntoView();
 }
+function addButton(option) {
+	var buttonDiv = document.getElementById("buttonDiv");
+  var button = '<div style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 10% ;text-align:center;" onclick="displayRes('+ option +')""><p style="font-size:25px; font-weight:bold">'+option+'</p></div>'
+	buttonDiv.insertAdjacentHTML("beforeend", button);
+  document.getElementById( 'scroll' ).scrollIntoView();
+}
+
 var rep = 0
+var age = 0
+var violences
+var frequence
+var loc
+var username
+
 function talk(){
   var temp = document.getElementById('userBox').value;
   var user = normalize(temp)
   userMessage(user)
+  // botMessage("workin:"+rep.toString())
   switch (rep){
     case -1:
       botMessage("Aurevoir, je reste disponible pour t'aider ainsi que les information sur notre site :)")
       break;
     case 0:
       rep=question1(user)
-      break;
+      break;  
     case 1:
-      username,rep=question2(user)
+      username=question2(user)
       if (username.length<2){
         botMessage("ton prénom doit faire plus de deux caractères")
-        username,rep=question2(user)
+        username=question2(user)
+      }else{
+        rep=question3(username,user)
       }
       break;
     case 2:
-      question3(username,user)
+      rep=question4(user)
+      break;
+    case 3:
+      rep=question5(user)
       break;
   }
-
+  document.getElementById("userBox").value = "";
 }
+
 function question1(input){
 
   var hello = [ "hi" , "hello", "salut", "bonjour", "yo" ,"hey","oui","s'il te plait", "stp" ,"ouais", "aide"]
-
   const non = [ "non", "comment"]
 
   if(hello.includes(input)){
     botMessage("pour t'aider j'aurai donc besoin de quelques informations sur toi..<br>Tu peux toujours répondre par non a chaque question pour ne pas répondre")
-    botMessage("Quel est ton prénom ? (écris que ton prénom)")
+    botMessage("Quel est ton prénom ? (n'écris que ton prénom)")
     rep=1
 
   }else if (non.includes(input)) {
-    botMessage("je suis un bot qui ne sauvegarde pas tes données et qui peut t'informer a propos du maltraitement")
+    botMessage("d'accord, je suis un bot qui ne sauvegarde pas tes données et qui peut t'informer a propos du maltraitement")
     rep=-1
 
   }else{
     botMessage("Je n'ai pas compris ta demande")
     rep=0
   }
-  document.getElementById("userBox").value = "";
+  
   return rep
 }
 
 function question2(input){
   const non = [ "non", "je veux pas"]
   if(non.includes(input)){
-    botMessage("pas de souci toi :)")
-    return "toi",2
+    username="toi"
   }else{
-    return input,2
+    username=input
   }
+  return username
 }
 
-function question3(username,user){
-  botMessage("Bonjour "+username)
+function question3(user){
+  botMessage("Bonjour "+username+" :)")
+  botMessage("Quel age as-tu ? (n'écris que le chiffre)")
+  return 2
+}
+
+function question4(input){
+  age=parseInt(input,10)
+  if (isNaN(age)){
+    botMessage("cet age n'est pas valide, écris seulement en chiffres")
+    return 2
+  }
+  botMessage("De quel genre de violence est-tu victime ?")
+  var chat_messages = document.getElementById("chatBulles");
+  var buttonDiv = '<div id="buttonDiv"style="padding: 0.5%; margin: 2.5%; margin-top: 0%; border-radius: 15px; width:80% ; display:flex ;flex-direction: row; "></div>'
+	chat_messages.insertAdjacentHTML("beforeend", buttonDiv);
+  addButton("morales")
+  addButton("physiques")
+  addButton("sexuelles")
+  addButton("autres")
+  return 3
+}
+
+function displayRes(option){
+  document.getElementById("userBox").value = option;
+}
+
+
+function question5(input){
+  botMessage("5")
+  
+  if(input == "morales") {
+
+  }if(input == "physiques"){
+
+  }if(input == "sexuelles") {
+    
+  }
+
 }
 
 
@@ -197,11 +250,7 @@ function question3(username,user){
       }
   }
 
-  
-      </script>
-
-      <!--  -->
-
+</script>
 
 </body>
 </html>
