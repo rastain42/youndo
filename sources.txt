@@ -1,5 +1,2 @@
 https://github.com/NamanTGG/AI-CHATBOT/blob/main/Tutorial.html
-https://www.youtube.com/watch?v=OcVKFA2ax4M
 https://dev.to/sylviapap/make-a-simple-chatbot-with-javascript-1gc
-
-codes violence : 1:morales / 2:physiques / 3:sexuelles / 4:string (autre)
