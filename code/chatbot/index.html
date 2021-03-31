@@ -1,39 +1,34 @@
+<!-- ChatBot créé par romain michel pour le projet youndo -->
+<!-- il à au départ été écrit de manière à tenir dans une page pour une intégration wordpress -->
 <html lang="en">
+
+<!-- https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript -->
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> ChatBot </title>
-    <!-- <link type="text/css" rel="stylesheet" href="styles.css" /> -->
+    <link type="text/css" rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<div id="wrapper">
-  <div id="wrapped" style="width: 100wh; display: flex; justify-content: space-around;">
-    <div style=" width: 85%; height: 70vh; box-shadow: 5px 5px 20px #000; border-radius: 20px;">
-      <div style="text-align: center;width: 100%; height: 55px; background: rgb(174, 107, 187); border-top-left-radius: 20px; border-top-right-radius: 20px;">
-        <h1 style=" margin: 0; font-size: 30px; color: rgb(61, 51, 207); text-align: center; padding-top: 10px; font-family: sans-serif;">Bonjour</h1>
-      </div>
-      <div style="width: 100%; height: 100%; background: rgb(0, 140, 255); overflow: auto;">
+<div id="wrapper" style="width: 100wh; display: flex; justify-content: space-around;">
+  <div style="box-shadow: 5px 5px 20px #000; width: 85%; height: 77vh; border-radius: 20px;">
+      <div style="width: 100%; height: 100%; background: rgba(224, 224, 224, 0.6); overflow: auto; border-top-left-radius: 20px; border-top-right-radius: 20px;">
         <div id=chatBulles class="padding: 2%; margin: 2%; overflow: auto;">
-          <div style="padding:0.5% ;padding-left: 2%; margin: 5%; margin-right: 40%; background-color: rgb(97, 45, 148); border-radius: 15px;"><p style="font-size:20px;">Hello je suis un robot qui respecte tes droits,<br> tu veux de l'aide ?</p></div>
-
-          <!-- <div style="padding: 0.5%; margin: 2.5%; margin-top: 0%; border-radius: 15px; width:80% ; display:flex ;flex-direction: row; ">
-            <div style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 15% ;text-align:center;;"><p style="font-size:20px;">option</p></div>
-            <div style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 15%;"><p style="font-size:20px;">option</p></div>
-            <div style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 15%;"><p style="font-size:20px;">option</p></div>
-          </div> -->
-
+          <div style="padding: 0.5%; padding-left: 2%; margin: 3%; margin-right: 40%; background-color: rgb(212, 155, 255); border-radius: 15px;">
+            <p style="font-size:22px;">Bonjour, je suis un robot qui respecte tes droits,<br> tu veux de l'aide ?</p></div>
         </div>
         <div id="scroll"></div>
       </div>
-      <div class="input" style=" height: 25%; width: 100%; overflow: auto;">
-          <input style=" border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; width: 100%; height: 100%; outline: none; border: none; padding-left: 30px; padding-top: 0; font-family: monospace; font-size: 30px; background: rgb(31, 8, 136);"type="text" id="userBox"onkeydown="if(event.keyCode == 13){ talk() }"placeholder="Appuie sur entrée pour envoyer un message">
-        </div>
-    </div>
+      <div class="input" style=" height: 20%; width: 100%; overflow: auto;">
+        <input style=" border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; width: 100%; height: 100%; outline: none; border: none; padding-left: 30px; padding-top: 0; font-family: monospace; font-size: 30px; background: rgb(224, 224, 224, 0.4);"
+        type="text" id="userBox" onkeydown="if(event.keyCode == 13){ talk() }" placeholder="Appuie sur entrée pour envoyer un message">
+      </div>
   </div>
 </div>
-
+  
+</div>
 <script>
 
   function normalize(input) {
@@ -42,31 +37,32 @@
       .replace(/s'il te plait /g, "")
       .replace(/ stp/g, "");
       return text
-}
+  }
 
 
 function botMessage(message) {
 	var chat_messages = document.getElementById("chatBulles");
-  var chatDiv = '<div style="padding: 0.5%; padding-left: 2%; margin: 3%; margin-right: 40%; background-color: rebeccapurple; border-radius: 15px;"><p style="font-size:20px;">'+ message +'</div>'
+  var chatDiv = '<div style="padding: 0.5%; padding-left: 2%; margin: 3%; margin-right: 40%; background-color: rgb(212, 155, 255); border-radius: 15px;"><p style="font-size:25px;">'+ message +'</div>'
 	chat_messages.insertAdjacentHTML("beforeend", chatDiv);
   document.getElementById( 'scroll' ).scrollIntoView();
 }
 
 function userMessage(message) {
 	var chat_messages = document.getElementById("chatBulles");
-  var chatDiv = '<div style="padding: 0.5%; margin: 5%; padding-left: 2%; margin-left: 40%; background-color: rgb(18, 15, 231); border-radius: 15px;"><p style="font-size:20px;">'+ message +'</div>'
+  var chatDiv = '<div style="padding: 0.5%; margin: 5%; padding-left: 2%; margin-left: 40%; background-color: rgb(0, 98, 233); border-radius: 15px;"><p style="font-size:25px;">'+ message +'</div>'
 	chat_messages.insertAdjacentHTML("beforeend", chatDiv);
   document.getElementById( 'scroll' ).scrollIntoView();
 }
 function addButton(option,buttonDivID) {
   var id="B"+option
 	var buttonDiv = document.getElementById(buttonDivID);
-  var button = '<div id="'+id+'" style="hover:opacity:0.5; padding: 0.5%; margin: 2%; margin-top: 0%;background-color: purple; border-radius: 15px; width: 15% ;text-align:center;"><p style="font-size:25px; font-weight:bold">'+option+'</p></div>'
+  var button = '<div id="'+id+'" class="button" style="padding: 0.5%; margin: 2%; margin-top: 0%;background-color: rgb(212, 155, 255); border-radius: 15px; width: 15% ;text-align:center;"><p style="font-size:25px; font-weight:bold">'+option+'</p></div>'
 	buttonDiv.insertAdjacentHTML("beforeend", button);
   document.getElementById( 'scroll' ).scrollIntoView();
   
   document.getElementById(id).onclick = function() {
     document.getElementById("userBox").value = option;
+    talk()
   }
 }
 
@@ -82,10 +78,10 @@ function talk(){
   var temp = document.getElementById('userBox').value;
   var user = normalize(temp)
   userMessage(user)
-  // botMessage("workin:"+rep.toString())
   switch (rep){
     case -1:
       botMessage("Aurevoir, je reste disponible pour t'aider ainsi que les information sur notre site :)")
+      rep=0
       break;
     case 0:
       rep=question1(user)
@@ -106,11 +102,10 @@ function talk(){
       rep=question5(user,passed)
       break;
     case 4:
-      question6(user)
+      rep=question6(user)
       break;
     case 5:
-      rep = question52(user)
-      passed=true
+      question7(user)
       break;
   }
   document.getElementById("userBox").value = "";
@@ -119,15 +114,15 @@ function talk(){
 function question1(input){
 
   var hello = [ "hi" , "hello", "salut", "bonjour", "yo" ,"hey","oui","s'il te plait", "stp" ,"ouais", "aide"]
-  const non = [ "non", "comment"]
+  const non = [ "non"]
 
   if(hello.includes(input)){
-    botMessage("pour t'aider j'aurai donc besoin de quelques informations sur toi..<br>Tu peux toujours répondre par non a chaque question pour ne pas répondre")
+    botMessage("Pour t'aider j'aurai donc besoin de quelques informations sur toi..<br>Tu peux toujours répondre par non à chaque question pour ne pas répondre")
     botMessage("Quel est ton prénom ? (n'écris que ton prénom)")
     rep=1
 
   }else if (non.includes(input)) {
-    botMessage("d'accord, je suis un bot qui ne sauvegarde pas tes données et qui peut t'informer a propos du maltraitement")
+    botMessage("D'accord, je suis un bot qui ne sauvegarde pas tes données et qui peut t'informer à propos du maltraitement")
     rep=-1
 
   }else{
@@ -150,24 +145,23 @@ function question2(input){
 
 function question3(user){
   botMessage("Bonjour "+username+" :)")
-  botMessage("Quel age as-tu ? (n'écris que le chiffre)")
+  botMessage("Quel âge as-tu ? (n'écris que le chiffre)")
   return 2
 }
 
 function question4(input){
   age=parseInt(input,10)
   if (isNaN(age)){
-    botMessage("cet age n'est pas valide, écris seulement en chiffres")
+    botMessage("Cet age n'est pas valide, écris seulement en chiffres")
     return 2
   }
-  botMessage("De quel genre de violence est-tu victime ?<br> (clique sur une option)")
+  botMessage("De quel type de violence es-tu victime ?<br> (clique sur une option)")
   var chat_messages = document.getElementById("chatBulles");
   var buttonDiv = '<div id="buttonDiv"style="padding: 0.5%; margin: 2.5%; margin-top: 0%; border-radius: 15px; width:80% ; display:flex ;flex-direction: row; "></div>'
 	chat_messages.insertAdjacentHTML("beforeend", buttonDiv);
-  addButton("morales","buttonDiv")
-  addButton("physiques","buttonDiv")
-  addButton("sexuelles","buttonDiv")
-  addButton("autres","buttonDiv")
+  addButton("Morales","buttonDiv")
+  addButton("Physiques","buttonDiv")
+  addButton("Sexuelles","buttonDiv")
   return 3
 }
 
@@ -176,122 +170,44 @@ function question5(input,passed){
     if (!passed){
       violences = input
     }
-    botMessage("d'accord, peut tu m'en dire plus sur la fréquence a laquelle cela s'est passé ?<br>(clique une option)")
+    botMessage("D'accord, peux-tu m'en dire plus sur la fréquence à laquelle cela s'est passé ?<br>(clique sur une option)")
     var chat_messages = document.getElementById("chatBulles");
     var buttonDiv2 = '<div id="buttonDiv2" style="padding: 0.5%; margin: 2.5%; margin-top: 0%; border-radius: 15px; width:80% ; display:flex ;flex-direction: row; "></div>'
 	  chat_messages.insertAdjacentHTML("beforeend", buttonDiv2);
-    addButton("tous les jours","buttonDiv2")
-    addButton("régulièrement","buttonDiv2")
-    addButton("rarement","buttonDiv2")
+    addButton("Tous les jours","buttonDiv2")
+    addButton("Régulièrement","buttonDiv2")
+    addButton("Rarement","buttonDiv2")
     return 4
 
-  }if(input == "autres"){
-    botMessage("dis-m'en plus en quelques mots")
-    return 5
   }else{
-    botMessage("je n'ai pas compris, clique sur un des bouttons")
+    botMessage("Je n'ai pas compris, clique sur un des bouttons")
     return 2
   }
 }
 
-function question52(input){//faire des listes d'autres violences qu'on peut reperer
-botMessage("question getting done")
-return 3
-}
-
 function question6(input){
-  if(input == "tous les jours" || input == "régulièrement" || input == "rarement" || input == "a des occasions"){
+  if(input == "tous les jours" || input == "régulièrement" || input == "rarement"){
     frequence=input
-    botMessage("D'accord je vais afficher des articles de loi et des témoignages qui pourraient t'aider")
-    setTimeout(suiteTraitement, 5000)
-    function suiteTraitement(){
-      var wrap= getElementById("wrapper")
-      var wrapped=getElementById("wrapped")
-      wrap.removeChild(wrapped) 
-    }
-    
+    botMessage("D'accord, quelle est ta ville, ta région ou ton village ?")
+    return 5
   }else{
-    botMessage("je n'ai pas compris, clique sur un des bouttons")
+    botMessage("Je n'ai pas compris, clique sur un des bouttons")
     return 3
   }
 }
 
-
-    function talkex(){
-///////////////////////Text in left side of consts have to be lowercase
-      var know ={
-          "hi" : "Hello",
-          "how are you ?" : "Great !",
-          "bye" : "Have A Nice Day !",
-          "hello" : "Hi , Whats Up",
-          "fak you" : "fak u too",
-      };
-      const trigger = [
-        //0 
-        ["hi", "hey", "hello"],
-        //1
-        ["how are you", "how are things"],
-        //2
-        ["what is going on", "what is up"],
-        //3
-        ["happy", "good", "well", "fantastic", "cool"],
-        //4
-        ["bad", "bored", "tired", "sad"],
-        //5
-        ["tell me story", "tell me joke"],
-        //6
-        ["thanks", "thank you"],
-        //7
-        ["bye", "good bye", "goodbye"]
-        ];
-
-      const reply = [
-        //0 
-        ["Hello!", "Hi!", "Hey!", "Hi there!"], 
-        //1
-        [
-            "Fine... how are you?",
-            "Pretty well, how are you?",
-            "Fantastic, how are you?"
-          ],
-        //2
-        [
-            "Nothing much",
-            "Exciting things!"
-          ],
-        //3
-        ["Glad to hear it"],
-        //4
-        ["Why?", "Cheer up buddy"],
-        //5
-        ["What about?", "Once upon a time..."],
-        //6
-        ["You're welcome", "No problem"],
-        //7
-        ["Goodbye", "See you later"],
-        ];
-
-      const alternative = [
-          "Same",
-          "Go on...",
-          "Try again",
-          "I'm listening...",
-          "Bro..."
-        ];
-      
-      const robot = ["Suis-je ? Ne suis-je pas ? je crois que je suis", "Je suis un gentil robot", "héhé elon musk n'a qu'a bien se tenir"];
-
-      var temp = document.getElementById('userBox').value;
-      var user = normalize(temp)
-      userMessage(user)
-      if(user in know){
-        botMessage(know[user])
-      }else if (user.match(/robot/gi) || user.match(/bot/gi)) {
-        botMessage(robot[Math.floor(Math.random() * robot.length)] + "<br>")
-      }else{
-        botMessage("I do not understand")
-      }
+function question7(input){
+  if (input !=""){
+    botMessage("D'accord je vais afficher des informations qui pourraient t'aider")
+    setTimeout(suite, 3000)
+    function suite(){
+      var wrap= document.getElementById("wrapper")
+      wrap.innerHTML = ''
+      var loadingpage = '<div style="box-shadow: 5px 5px 20px #000; width: 100%; height: 95vh; border-radius: 20px;"><div style="width: 100%; height: 100%; overflow: auto; border-top-left-radius: 20px; border-top-right-radius: 20px; display: flex; justify-content:center ;">  <h1 style="margin-top: 20%; color: rgb(212, 155, 255)">→ Redirection géographiques vers des centres, des associations, planning familial, etc...<br>    → Redirection vers des articles et témoignages<br>        → Redirection vers des pages contacts (numéros d’associations, numéros planning familial)</h1></div>'
+      wrap.insertAdjacentHTML("beforeend",loadingpage)
+    }
   }
+}
 
 </script>
 
